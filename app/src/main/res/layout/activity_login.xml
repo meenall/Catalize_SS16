@@ -53,9 +53,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="Name"
+                    android:hint="Name"
                     android:ems="10"
-                    android:id="@+id/editText2" />
+                    android:id="@+id/name" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:hint="Email"
+                    android:ems="10"
+                    android:id="@+id/email" />
 
                 <Button
                     android:id="@+id/signin"
