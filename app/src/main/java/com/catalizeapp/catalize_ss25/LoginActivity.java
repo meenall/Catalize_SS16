@@ -31,6 +31,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,17 +66,47 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    /*public void clickFunction(View view) {
+        EditText name = (EditText) findViewById(R.id.name);
+        EditText email = (EditText) findViewById(R.id.email);
+        Button signIn = (Button) findViewById(R.id.signin);
+
+        if (name.getText().toString().matches("")) {
+            Toast.makeText(getApplicationContext(), "Please enter your full name", Toast.LENGTH_SHORT).show();
+        } else if (email.getText().toString().matches("")) {
+            Toast.makeText(getApplicationContext(), "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(LoginActivity.this, Contacts.class);
+            intent.putExtra("name_value", name.getText().toString());
+            intent.putExtra("email_value", email.getText().toString());
+            startActivity(intent);
+        }
+    }*/
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
+
         setContentView(R.layout.activity_login);
+
+        final EditText name = (EditText) findViewById(R.id.name);
+        final EditText email = (EditText) findViewById(R.id.email);
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View view) {
-                    startActivityForResult(new Intent(LoginActivity.this, Contacts.class), 10);
+                if (name.getText().toString().matches("")) {
+                    Toast.makeText(getApplicationContext(), "Please enter your full name", Toast.LENGTH_SHORT).show();
+                } else if (email.getText().toString().matches("")) {
+                    Toast.makeText(getApplicationContext(), "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(LoginActivity.this, Contacts.class);
+                    intent.putExtra("name_value", name.getText().toString());
+                    intent.putExtra("email_value", email.getText().toString());
+                    startActivity(intent);
+                }
+                    //startActivityForResult(new Intent(LoginActivity.this, Contacts.class), 10);
             }
         };
         Button btn1 = (Button)findViewById(R.id.signin);
