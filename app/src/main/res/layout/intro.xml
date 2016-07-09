@@ -40,7 +40,8 @@
         android:layout_gravity="center_horizontal">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:backgroundTint="#212120">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -55,7 +56,8 @@
                 android:paddingTop="10dp"
                 android:textSize="25sp"
                 android:textAlignment="center"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textColor="#212120" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -63,7 +65,10 @@
                 android:inputType="textMultiLine"
                 android:ems="10"
                 android:id="@+id/editText"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:hint="Ex: Hey Person 1, meet Person 2. I am introducing you two because..."
+                android:textAlignment="center"
+                android:textColorHint="#212120" />
         </LinearLayout>
 
         <Button
