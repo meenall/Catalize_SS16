@@ -24,26 +24,32 @@ public class Account extends AppCompatActivity {
         final TextView people = (TextView) findViewById(R.id.people);
         String temp = Contacts.people;
         temp = temp.replaceAll("[^0-9]","");
-        //temp = temp.trim();
+        temp = temp.trim();
 
         if (temp.length()==14){ //this is for numbers of length 7 w/o area code (ex: 471-9427)
             String person1 = temp.substring(0,7);
             String person2 = temp.substring(7);
             Toast.makeText(getApplicationContext(), person1+" "+person2 + "length 7 & 7", Toast.LENGTH_LONG).show();
-        } else if (temp.length() == 17){ //this is for a number of len 7 and a number of len 10
+        }
+//this does not work for numbers with parenthesis or no "-"s
+        else if (temp.length() == 17){ //this is for a number of len 7 and a number of len 10
             String temp2 = Contacts.people;
-            temp2 = temp2.replaceAll("[^0-9,-]","");
+            String firstThing = temp2.substring(0,2);
             temp2 = temp2.trim();
             int index = temp2.indexOf("-");
-            String check = temp2.substring(index+1,index+5);
-            if (check.contains("-")){
+            String check = temp2.substring(index+1,index+6);
+            if (firstThing.compareTo("(")==1){
+                String person1 = temp.substring(0,10);
+                String person2 = temp.substring(10);
+                Toast.makeText(getApplicationContext(), person1+" "+person2 + "length 10 and 7 with parenthesis", Toast.LENGTH_LONG).show();
+            }
+            else if (check.contains("-")){
                 temp2 = temp2.replaceAll("[^0-9]","");
                 String person1 = temp2.substring(0,10);
                 String person2 = temp2.substring(10);
 
                 Toast.makeText(getApplicationContext(), person1+" "+person2 + "length 10 and 7", Toast.LENGTH_LONG).show();
             }
-
             else{
                 temp2 = temp2.replaceAll("[^0-9]","");
                 String person1 = temp2.substring(0,7);
@@ -51,8 +57,7 @@ public class Account extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), person1+" "+person2 + "length 7 and 10", Toast.LENGTH_LONG).show();
             }
         } else if (temp.length()==18){ //for numbers of length 7 and 11
-            String firstNum = temp.substring(0,1); //this is not working properly. only works when first number is 7 digits long
-            //nothing going into this if statement below
+            String firstNum = temp.substring(0,2);
             if (firstNum.compareTo("1")==1){
                 String person1 = temp.substring(0,11);
                 String person2 = temp.substring(11);
@@ -68,8 +73,7 @@ public class Account extends AppCompatActivity {
             String person1 = temp.substring(0,10);
             String person2 = temp.substring(10);
             Toast.makeText(getApplicationContext(), person1+" "+person2 + "length 20", Toast.LENGTH_LONG).show();
-        } else if ( temp.length()== 21) { //this is not working properly. only works when first number is 10 digits long
-            //nothing going into this if statement below
+        } else if ( temp.length()== 21) {
             String firstNum = temp.substring(0,2);
             if (firstNum.compareTo("1")==1){
                 String person1 = temp.substring(0, 11);

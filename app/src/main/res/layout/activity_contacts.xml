@@ -18,7 +18,8 @@
             android:layout_height="match_parent"
             android:cacheColorHint="#ffccff"
             android:divider="@color/colorPrimary"
-            android:dividerHeight="2sp">
+            android:dividerHeight="2sp"
+        android:layout_above="@+id/connect">
         </ListView>
 
         <Button
