@@ -9,7 +9,8 @@
     android:background="#FAFAFA"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="0dp"
-    tools:context="com.catalizeapp.catalize_ss25.LoginActivity">
+    tools:context="com.catalizeapp.catalize_ss25.LoginActivity"
+    android:weightSum="1">
 
     <!-- Login progress -->
     <ProgressBar
@@ -19,6 +20,56 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Write a brief introduction:"
+                android:id="@+id/textView"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:textSize="25sp"
+                android:textAlignment="center"
+                android:textColor="#FF2FA4D7"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:background="@android:color/transparent"
+                android:id="@+id/editText"
+                android:hint="Ex: Hey Person 1, meet Person 2. I am introducing you two because..."
+                android:textColorHint="#C1C3B8"
+                android:nestedScrollingEnabled="true"
+                android:scrollIndicators="top|right" />
+        </LinearLayout>
+
+        <Button
+                android:id="@+id/send"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#ffffff"
+                android:textSize="19sp"
+                android:text="Send"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal|bottom" />
+    </FrameLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,62 +84,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="#212120">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Write a brief introduction:"
-                android:id="@+id/textView"
-                android:paddingTop="10dp"
-                android:textSize="25sp"
-                android:textAlignment="center"
-                android:layout_gravity="center_horizontal"
-                android:textColor="#212120" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/editText"
-                android:layout_gravity="center_horizontal"
-                android:hint="Ex: Hey Person 1, meet Person 2. I am introducing you two because..."
-                android:textAlignment="center"
-                android:textColorHint="#212120" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/send"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/colorPrimary"
-            android:textColor="#ffffff"
-            android:textSize="19sp"
-            android:text="Send"
-            android:textStyle="bold"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp" />
-        </RelativeLayout>
-
-    </FrameLayout>
 
 </LinearLayout>
