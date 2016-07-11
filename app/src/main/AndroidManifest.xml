@@ -22,18 +22,20 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
-                <action android:name = "android.intent.action.SEARCH"/>
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
 
-            <meta-data android:name="android.app.default_searchable"
-                android:value="Contacts"/>
-            <meta-data android:name="android.app.searchable"
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="Contacts" />
+            <meta-data
+                android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".Contacts" />
-        <activity android:name=".Account"></activity>
+        <activity android:name=".Account" />
+        <activity android:name=".ReportBug"></activity>
     </application>
 
 </manifest>

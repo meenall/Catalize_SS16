@@ -158,7 +158,7 @@ public class Contacts extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<String> contacts) {
-            //TODO Auto-generated method stub
+            // TODO Auto-generated method stub
             super.onPostExecute(contacts);
 
             pd.cancel();
@@ -170,7 +170,6 @@ public class Contacts extends AppCompatActivity {
 
             list.setAdapter(adapter);
             list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
 
 
         }
@@ -191,7 +190,8 @@ public class Contacts extends AppCompatActivity {
 
         switch(item.getItemId()){
             case(R.id.menu_1):
-                Toast.makeText(Contacts.this, "option 1 clicked", Toast.LENGTH_LONG).show();
+                Intent intentReportBug = new Intent(Contacts.this, ReportBug.class); //
+                startActivity(intentReportBug);
                 break;
         }
 

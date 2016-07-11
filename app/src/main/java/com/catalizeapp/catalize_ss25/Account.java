@@ -23,7 +23,7 @@ public class Account extends AppCompatActivity {
         final EditText et=(EditText)findViewById(R.id.editText);
         final TextView people = (TextView) findViewById(R.id.people);
         String temp = Contacts.people;
-        temp = temp.replaceAll("[^0-9]","");
+        /*temp = temp.replaceAll("[^0-9]","");
         temp = temp.trim();
 
         if (temp.length()==14){ //this is for numbers of length 7 w/o area code (ex: 471-9427)
@@ -100,7 +100,7 @@ public class Account extends AppCompatActivity {
 
         else {
             Toast.makeText(getApplicationContext(), "One of these numbers is invalid", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         //people.setText(temp.substring(0,10));
         //sendIntent.putExtra(et.getText().toString(), "default content");
