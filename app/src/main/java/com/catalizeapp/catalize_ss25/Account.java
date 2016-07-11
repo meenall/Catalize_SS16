@@ -126,7 +126,7 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    SmsManager.getDefault().sendTextMessage("9154719427", null, "Introduction from " + personName + " " + personEmail+ " " + "Contacts: " + Contacts.numbers + "\n" + et.getText().toString(), null, null);
+                    SmsManager.getDefault().sendTextMessage("9154719427", null, "Introduction from person" + personName + " " + personEmail+ " " + "Contacts: " + Contacts.numbers + "\n" + et.getText().toString(), null, null);
                     finish();
                 } catch (Exception e) {
                     AlertDialog.Builder alertDialogBuilder = new
@@ -151,6 +151,14 @@ public class Account extends AppCompatActivity {
             case(R.id.menu_1):
                 Intent intentReportBug = new Intent(Account.this, ReportBug.class); //
                 startActivity(intentReportBug);
+                break;
+            case(R.id.menu_2):
+                Intent intentLogOut = new Intent(Account.this, LoginActivity.class);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                startActivity(intentLogOut);
+                finish();
                 break;
         }
 
