@@ -16,6 +16,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -58,19 +59,17 @@ public class Contacts extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                SearchView searchView = (SearchView) findViewById(R.id.menu_search);
-                searchView.clearFocus();
-                searchView.setQuery("", false);
+                ActionMenuItemView searchView = (ActionMenuItemView) findViewById(R.id.menu_search);
+                //searchView.clearFocus();
+                //searchView.setQuery("", false);
                 getSelectedContacts();
                 startActivityForResult(new Intent(Contacts.this, Account.class), 10);
             }
         });
-
         addContactsInList();
     }
 
     private void getSelectedContacts() {
-        // TODO Auto-generated method stub
         numbers = "";
         person1 = "";
         person2 = "";
@@ -100,7 +99,6 @@ public class Contacts extends AppCompatActivity {
     }
 
     private void addContactsInList() {
-        // TODO Auto-generated method stub
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -142,12 +140,12 @@ public class Contacts extends AppCompatActivity {
                                     .getString(cEmail
                                             .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
                             ContactObject cp2 = new ContactObject();
-                            cp2.setName("Unknown");
-                            cp2.setNumber(email);
-                            cp2.setImage("");
+                            cp2.setName(email);
+                            cp2.setNumber("");
+                            cp2.setImage(null);
                             ContactsListClass.phoneList.add(cp2);
                             //Toast.makeText(context, email,
-                              //            Toast.LENGTH_SHORT).show();
+                            //              Toast.LENGTH_SHORT).show();
                             //break;
                         }
                     }

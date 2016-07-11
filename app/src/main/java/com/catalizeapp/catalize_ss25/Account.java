@@ -1,11 +1,14 @@
 package com.catalizeapp.catalize_ss25;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +18,10 @@ import android.widget.Toast;
 public class Account extends AppCompatActivity {
 
     Context context = null;
+    boolean flag = false;
+    private String result;
+    private String result2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +29,99 @@ public class Account extends AppCompatActivity {
         setContentView(R.layout.intro);
         context = this;
 
-        EditText prompt = (EditText) findViewById(R.id.prompt);
-        prompt.setText("Hello " + Contacts.person1 + ", meet " + Contacts.person2 + ". I am introducing you two because...");
+        //final Dialog dialog = new Dialog(Account.this);
+        final EditText prompt = (EditText) findViewById(R.id.prompt);
+        if (Contacts.person1.contains("@") && Contacts.person2.contains("@")) {
+            TextView name = (TextView) findViewById(R.id.nameerror);
+            //name.setText("Set a name for " + Contacts.person1 + ": ");
+            LayoutInflater li = LayoutInflater.from(context);
+            View promptsView = li.inflate(R.layout.layout_prompts, null);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    context);
+
+            alertDialogBuilder.setView(promptsView);
+
+            final EditText userInput = (EditText) promptsView
+                    .findViewById(R.id.editTextDialogUserInput);
+            final EditText userInput2 = (EditText) promptsView
+                    .findViewById(R.id.input2);
+
+            alertDialogBuilder
+                    .setCancelable(false)
+                    .setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    flag = true;
+                                    // get user input and set it to result
+                                    // edit text
+                                    result = userInput.getText().toString();
+                                    result2 = userInput2.getText().toString();
+                                    prompt.setText("Hello " + result + ", meet " + result2 + ". I am introducing you two because...");
+                                    //Contacts.person1 = result;
+                                }
+                            })
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+
+        }
+
+        if (Contacts.person1.contains("@") && !Contacts.person2.contains("@") || Contacts.person2.contains("@") && !Contacts.person1.contains("@")) {
+            LayoutInflater li = LayoutInflater.from(context);
+            View promptsView = li.inflate(R.layout.layout_prompt, null);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    context);
+
+            alertDialogBuilder.setView(promptsView);
+
+            final EditText userInput = (EditText) promptsView
+                    .findViewById(R.id.editTextDialogUserInput);
+
+            alertDialogBuilder
+                    .setCancelable(false)
+                    .setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    flag = true;
+                                    // get user input and set it to result
+                                    // edit text
+                                    result = userInput.getText().toString();
+                                    if (Contacts.person1.contains("@")) {
+                                        prompt.setText("Hello " + result + ", meet " + Contacts.person2 + ". I am introducing you two because...");
+                                    } else {
+                                        prompt.setText("Hello " + Contacts.person1 + ", meet " + result + ". I am introducing you two because...");
+                                    }
+                                    //Contacts.person1 = result;
+                                }
+                            })
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // show it
+            alertDialog.show();
+
+        }
+
+
+
 
         final Intent sendIntent = new Intent(Intent.ACTION_VIEW);
         final EditText et=(EditText)findViewById(R.id.prompt);

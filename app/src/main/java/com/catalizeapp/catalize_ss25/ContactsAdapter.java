@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.ContactsContract.Contacts;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,23 +118,29 @@ public class ContactsAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
     public Bitmap getByteContactPhoto(String contactId) {
-        Uri contactUri = ContentUris.withAppendedId(Contacts.CONTENT_URI, Long.parseLong(contactId));
-        Uri photoUri = Uri.withAppendedPath(contactUri, Contacts.Photo.CONTENT_DIRECTORY);
-        Cursor cursor = mContext.getContentResolver().query(photoUri,
-                new String[] {Contacts.Photo.DATA15}, null, null, null);
-        if (cursor == null) {
-            return null;
-        }
         try {
-            if (cursor.moveToFirst()) {
-                byte[] data = cursor.getBlob(0);
-                if (data != null) {
-                    return BitmapFactory.decodeStream( new ByteArrayInputStream(data));
-                }
+            Uri contactUri = ContentUris.withAppendedId(Contacts.CONTENT_URI, Long.parseLong(contactId));
+            Uri photoUri = Uri.withAppendedPath(contactUri, Contacts.Photo.CONTENT_DIRECTORY);
+            Cursor cursor = mContext.getContentResolver().query(photoUri,
+                    new String[]{Contacts.Photo.DATA15}, null, null, null);
+            if (cursor == null) {
+                return null;
             }
-        } finally {
-            cursor.close();
+            try {
+                if (cursor.moveToFirst()) {
+                    byte[] data = cursor.getBlob(0);
+                    if (data != null) {
+                        return BitmapFactory.decodeStream(new ByteArrayInputStream(data));
+                    }}
+            } finally {
+                cursor.close();
+            }
         }
+        catch(Exception e){
+            Log.e("Error getting image",e.getMessage());
+
+        }
+
         return null;
     }
 
