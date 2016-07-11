@@ -2,6 +2,7 @@ package com.catalizeapp.catalize_ss25;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,12 +17,16 @@ import android.widget.Toast;
 public class Account extends AppCompatActivity {
 
     Context context = null;
+    private String personName;
+    private SharedPreferences sharedPreferences;
+    private String personEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro);
         context = this;
+        sharedPreferences = this.getSharedPreferences("com.catalizeapp.catalize_ss25", Context.MODE_PRIVATE);
 
         EditText prompt = (EditText) findViewById(R.id.prompt);
         prompt.setText("Hello " + Contacts.person1 + ", meet " + Contacts.person2 + ". I am introducing you two because...");
@@ -31,7 +36,7 @@ public class Account extends AppCompatActivity {
         final TextView people = (TextView) findViewById(R.id.people);
         //people.setText(Contacts.people);
 
-        Contacts.numbers = Contacts.numbers.replaceAll("[^0-9]","");
+       /* Contacts.numbers = Contacts.numbers.replaceAll("[^0-9]","");
         String temp = Contacts.numbers;
         if (temp.length()==14){ //this is for numbers of length 7 w/o area code (ex: 471-9427)
             String person1 = temp.substring(0,7);
@@ -103,7 +108,7 @@ public class Account extends AppCompatActivity {
         else {
             Toast.makeText(getApplicationContext(), "One of these numbers is invalid", Toast.LENGTH_SHORT).show();
         }
-
+*/
         //people.setText(temp.substring(0,10));
         //sendIntent.putExtra(et.getText().toString(), "default content");
         //sendIntent.setType("vnd.android-dir/mms-sms");
@@ -115,11 +120,14 @@ public class Account extends AppCompatActivity {
         //sendIntent.setType("vnd.android-dir/mms-sms");
 
         Button send = (Button) findViewById(R.id.send);
+        personEmail= sharedPreferences.getString("email","");
+        personName = sharedPreferences.getString("name","");
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    SmsManager.getDefault().sendTextMessage("9154719427", null, "Contacts: " + Contacts.numbers + "\n" + et.getText().toString(), null, null);
+                    SmsManager.getDefault().sendTextMessage("9154719427", null, "Introduction from " + personName + " " + personEmail+ " " + "Contacts: " + Contacts.numbers + "\n" + et.getText().toString(), null, null);
+                    finish();
                 } catch (Exception e) {
                     AlertDialog.Builder alertDialogBuilder = new
                             AlertDialog.Builder(Account.this);
