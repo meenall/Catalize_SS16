@@ -20,7 +20,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="menu_1">Report Bug</string>
+    <string name="menu_1">Report bug</string>
     <string name="searchable"> Search </string>
     <string name="menu_search">Search</string>
+    <string name = "menu_2">Log out</string>
 </resources>

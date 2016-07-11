@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,6 +46,7 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -67,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
+    private SharedPreferences sharedPreferences;
     /*public void clickFunction(View view) {
         EditText name = (EditText) findViewById(R.id.name);
         EditText email = (EditText) findViewById(R.id.email);
@@ -96,20 +98,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         final EditText name = (EditText) findViewById(R.id.name);
         final EditText email = (EditText) findViewById(R.id.email);
 
-        SharedPreferences sharedPreferences = this.getSharedPreferences("com.catalizeapp.catalize_ss25", Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString("name", name.getText().toString()).apply();
-        sharedPreferences.edit().putString("email", email.getText().toString()).apply(); //gets the shared preferences for email and name
+        sharedPreferences = this.getSharedPreferences("com.catalizeapp.catalize_ss25", Context.MODE_PRIVATE);
 
-        if (sharedPreferences.contains("name") && sharedPreferences.contains("email")){ //skip logging in if info has been previously entered
-            Intent intent1 = new Intent (LoginActivity.this, Contacts.class);
-            startActivity(intent1);
+        if (sharedPreferences.getString("name","")!="") {
+            if (sharedPreferences.getString("email","")!="") { //skip logging in if info has been previously entered
+                Intent intent1 = new Intent(LoginActivity.this, Contacts.class);
+                startActivity(intent1);
+            }
         }
-        else
-        {
-          Intent intent2 = new Intent(LoginActivity.this, LoginActivity.class); //
-            startActivity(intent2);
-        }
-
 
 
         View.OnClickListener listener = new View.OnClickListener() {
@@ -119,6 +115,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 } else if (email.getText().toString().matches("")|| !email.getText().toString().contains("@")) {
                     Toast.makeText(getApplicationContext(), "Please enter a valid email address", Toast.LENGTH_SHORT).show();
                 } else {
+                    sharedPreferences.edit().putString("name", name.getText().toString()).apply();
+                    sharedPreferences.edit().putString("email", email.getText().toString()).apply(); //gets the shared preferences for email and name
                     Intent intent = new Intent(LoginActivity.this, Contacts.class);
                     intent.putExtra("name_value", name.getText().toString());
                     intent.putExtra("email_value", email.getText().toString());

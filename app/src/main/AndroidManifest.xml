@@ -35,7 +35,12 @@
         </activity>
         <activity android:name=".Contacts" />
         <activity android:name=".Account" />
-        <activity android:name=".ReportBug"></activity>
+            <meta-data android:name = "android.support.PARENT_ACTIVITY"
+                android:value= ".Contacts"/>
+        <activity android:name=".ReportBug">
+            <meta-data android:name = "android.support.PARENT_ACTIVITY"
+                android:value=".Contacts"/>
+        </activity>
     </application>
 
 </manifest>
