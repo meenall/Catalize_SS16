@@ -9,22 +9,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <EditText
-            android:id="@+id/input_search"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:hint="Search Contacts"
-            android:textSize="18dp" />
+
         <LinearLayout
             android:id="@+id/data_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/connect"
-            android:layout_below="@+id/input_search"
             android:gravity="center|top"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:layout_centerInParent="true" />
         <Button
             android:id="@+id/connect"
             style="?android:textAppearanceSmall"

@@ -36,7 +36,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.content.ContentResolver;
-public class Contacts extends Activity {
+public class Contacts extends AppCompatActivity {
     Context context = null;
     public static String person1 = "";
     public static String person2 = "";
@@ -53,40 +53,18 @@ public class Contacts extends Activity {
         context = this;
         setContentView(R.layout.activity_contacts);
         rlPBContainer = (RelativeLayout) findViewById(R.id.pbcontainer);
-        edtSearch = (EditText) findViewById(R.id.input_search);
         llContainer = (LinearLayout) findViewById(R.id.data_container);
         btnOK = (Button) findViewById(R.id.connect);
         btnOK.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                // TODO Auto-generated method stub
-                edtSearch.setText("");
-                edtSearch.clearFocus();
                 getSelectedContacts();
                 startActivityForResult(new Intent(Contacts.this, Account.class), 10);
             }
         });
-        edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence cs, int arg1, int arg2,
-                                      int arg3) {
-                // When user changed the Text
-                String text = edtSearch.getText().toString()
-                        .toLowerCase(Locale.getDefault());
-                objAdapter.filter(text);
-            }
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1,
-                                          int arg2, int arg3) {
-                // TODO Auto-generated method stub
-            }
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-            }
-        });
         addContactsInList();
     }
+
     private void getSelectedContacts() {
         // TODO Auto-generated method stub
         numbers = "";
@@ -225,7 +203,6 @@ public class Contacts extends Activity {
             public void run() {
                 // TODO Auto-generated method stub
                 rlPBContainer.setVisibility(View.VISIBLE);
-                edtSearch.setVisibility(View.GONE);
                 btnOK.setVisibility(View.GONE);
             }
         });
@@ -236,7 +213,6 @@ public class Contacts extends Activity {
             public void run() {
                 // TODO Auto-generated method stub
                 rlPBContainer.setVisibility(View.GONE);
-                edtSearch.setVisibility(View.VISIBLE);
                 btnOK.setVisibility(View.VISIBLE);
             }
         });
@@ -247,6 +223,27 @@ public class Contacts extends Activity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+
+        if (null != searchView) {
+            searchView.setSearchableInfo(searchManager
+                    .getSearchableInfo(getComponentName()));
+            searchView.setIconifiedByDefault(false);
+        }
+
+        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+            public boolean onQueryTextChange(String newText) {
+                newText.toLowerCase(Locale.getDefault());
+                objAdapter.filter(newText);
+                return true;
+            }
+
+            public boolean onQueryTextSubmit(String query) {
+                //Here u can get the value "query" which is entered in the search box.
+                return true;
+            }
+        };
+        searchView.setOnQueryTextListener(queryTextListener);
+
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         return super.onCreateOptionsMenu(menu);
     }
