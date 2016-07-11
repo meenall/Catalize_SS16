@@ -17,20 +17,17 @@ public class ReportBug extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_bug);
-        final Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        final TextView people = (TextView) findViewById(R.id.people);
+        final Intent sendIntent2 = new Intent(Intent.ACTION_VIEW);
         final EditText et2=(EditText)findViewById(R.id.editText2);
+//        final TextView people = (TextView) findViewById(R.id.people);
+//        String temp = Contacts.people;
 
-        Button sendThis = (Button) findViewById(R.id.send_report);
-        final Bundle extras = getIntent().getExtras();
-        final String personName = (String) extras.get("name_value");
-
-        sendThis.setOnClickListener(new View.OnClickListener() {
+        Button send = (Button) findViewById(R.id.send_report);
+        send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), personName.toString(), Toast.LENGTH_LONG).show();
                 try {
-                    SmsManager.getDefault().sendTextMessage("9154719427", null, personName.toString() + "\n" + "Bug Report" + "\n"+et2.getText().toString(), null, null);
+                    SmsManager.getDefault().sendTextMessage("9154719427", null, et2.getText().toString()+ "\n" + Contacts.people, null, null);
                 } catch (Exception e) {
                     AlertDialog.Builder alertDialogBuilder = new
                             AlertDialog.Builder(ReportBug.this);
@@ -41,9 +38,8 @@ public class ReportBug extends AppCompatActivity {
 
 
                     dialog.show();
+                    startActivity(sendIntent2);
                 }
-                Toast.makeText(getApplicationContext(), "Bug report submitted!", Toast.LENGTH_LONG).show();
-                startActivity(sendIntent);
             }
         });
     }
