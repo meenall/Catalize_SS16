@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -133,6 +134,19 @@ public class Account extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch(item.getItemId()){
+            case(R.id.menu_1):
+                Intent intentReportBug = new Intent(Account.this, ReportBug.class); //
+                startActivity(intentReportBug);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
 

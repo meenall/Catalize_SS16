@@ -3,6 +3,7 @@ package com.catalizeapp.catalize_ss25;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.util.ArrayList;
@@ -46,10 +47,12 @@ public class Contacts extends AppCompatActivity {
     LinearLayout llContainer = null;
     Button btnOK = null;
     RelativeLayout rlPBContainer = null;
+    private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        sharedPreferences = this.getSharedPreferences("com.catalizeapp.catalize_ss25", Context.MODE_PRIVATE);
         setContentView(R.layout.activity_contacts);
         rlPBContainer = (RelativeLayout) findViewById(R.id.pbcontainer);
         llContainer = (LinearLayout) findViewById(R.id.data_container);
@@ -280,8 +283,17 @@ public class Contacts extends AppCompatActivity {
                 Intent intentReportBug = new Intent(Contacts.this, ReportBug.class); //
                 startActivity(intentReportBug);
                 break;
+            case(R.id.menu_2):
+                Intent intentLogOut = new Intent(Contacts.this, LoginActivity.class);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                startActivity(intentLogOut);
+                finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }
