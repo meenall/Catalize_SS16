@@ -43,7 +43,6 @@ public class Contacts extends AppCompatActivity {
     public static String numbers = "";
     ContactsAdapter objAdapter;
     ListView lv = null;
-    EditText edtSearch = null;
     LinearLayout llContainer = null;
     Button btnOK = null;
     RelativeLayout rlPBContainer = null;
@@ -58,10 +57,15 @@ public class Contacts extends AppCompatActivity {
         btnOK.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                // TODO Auto-generated method stub
+                SearchView searchView = (SearchView) findViewById(R.id.menu_search);
+                searchView.clearFocus();
+                searchView.setQuery("", false);
                 getSelectedContacts();
                 startActivityForResult(new Intent(Contacts.this, Account.class), 10);
             }
         });
+
         addContactsInList();
     }
 
@@ -94,6 +98,7 @@ public class Contacts extends AppCompatActivity {
               //      Toast.LENGTH_SHORT).show();
         }
     }
+
     private void addContactsInList() {
         // TODO Auto-generated method stub
         Thread thread = new Thread() {
@@ -197,6 +202,7 @@ public class Contacts extends AppCompatActivity {
         };
         thread.start();
     }
+
     void showPB() {
         runOnUiThread(new Runnable() {
             @Override
@@ -207,6 +213,7 @@ public class Contacts extends AppCompatActivity {
             }
         });
     }
+
     void hidePB() {
         runOnUiThread(new Runnable() {
             @Override
@@ -221,7 +228,7 @@ public class Contacts extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
 
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        final SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
 
         if (null != searchView) {
@@ -229,6 +236,21 @@ public class Contacts extends AppCompatActivity {
                     .getSearchableInfo(getComponentName()));
             searchView.setIconifiedByDefault(false);
         }
+
+        /*CheckBox repeatChkBx = ( CheckBox ) findViewById( R.id.contactcheck );
+        repeatChkBx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                if ( isChecked )
+                {
+                    searchView.clearFocus();
+                    searchView.setQuery("", false);
+                }
+
+            }
+        });*/
 
         SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
             public boolean onQueryTextChange(String newText) {
@@ -238,6 +260,8 @@ public class Contacts extends AppCompatActivity {
             }
 
             public boolean onQueryTextSubmit(String query) {
+                searchView.setQuery("", false);
+                searchView.clearFocus();
                 //Here u can get the value "query" which is entered in the search box.
                 return true;
             }
