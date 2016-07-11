@@ -49,8 +49,7 @@
                 android:inputType="textMultiLine"
                 android:ems="10"
                 android:background="@android:color/transparent"
-                android:id="@+id/editText"
-                android:hint="Ex: Hey Person 1, meet Person 2. I am introducing you two because..."
+                android:id="@+id/prompt"
                 android:textColorHint="#C1C3B8"
                 android:nestedScrollingEnabled="true"
                 android:scrollIndicators="top|right" />
@@ -69,6 +68,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal|bottom" />
+
     </FrameLayout>
 
     <TextView

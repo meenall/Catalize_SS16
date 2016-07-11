@@ -27,7 +27,7 @@ public class ReportBug extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    SmsManager.getDefault().sendTextMessage("9154719427", null, et2.getText().toString()+ "\n" + Contacts.people, null, null);
+                    SmsManager.getDefault().sendTextMessage("9154719427", null, et2.getText().toString(), null, null);
                 } catch (Exception e) {
                     AlertDialog.Builder alertDialogBuilder = new
                             AlertDialog.Builder(ReportBug.this);
