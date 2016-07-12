@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/nameerror"
-        android:text="Error: Please choose 2 contacts to introduce."
+        android:text="Please choose 2 contacts to introduce."
         android:layout_width="wrap_content"
         android:textColor="@color/colorPrimary"
         android:layout_height="wrap_content"

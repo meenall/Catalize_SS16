@@ -2,8 +2,10 @@ package com.catalizeapp.catalize_ss25;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +46,8 @@ public class Contacts extends AppCompatActivity {
     Context context = null;
     public static String person1 = "";
     public static String person2 = "";
-    public static String numbers = "";
+    public static String number1 = "";
+    public static String number2 = "";
     boolean flag = false;
     ContactsAdapter objAdapter;
     ActionMenuItemView searchView2;
@@ -77,14 +81,14 @@ public class Contacts extends AppCompatActivity {
                     searchView.setQuery("", false);
                 }
                 getSelectedContacts();
-                startActivityForResult(new Intent(Contacts.this, Account.class), 10);
             }
         });
         addContactsInList();
     }
 
     private void getSelectedContacts() {
-        numbers = "";
+        number1 = "";
+        number2 = "";
         person1 = "";
         person2 = "";
         int total = 0;
@@ -94,7 +98,11 @@ public class Contacts extends AppCompatActivity {
                 total++;
                 bean.setSelected(false);
                 sb.append(bean.getName());
-                numbers += bean.getNumber();
+                if (number1 == "") {
+                    number1 = bean.getNumber();
+                } else {
+                    number2 = bean.getNumber();
+                }
                 sb.append(",");
                 if (person1 == "") {
                     person1 = bean.getName();
@@ -110,15 +118,32 @@ public class Contacts extends AppCompatActivity {
             cb = (CheckBox)lv.getChildAt(i).findViewById(R.id.contactcheck);
             cb.setChecked(false);
         }
+        if (total != 2) {
+            LayoutInflater li = LayoutInflater.from(context);
+            View promptsView = li.inflate(R.layout.two, null);
 
-        String s = sb.toString().trim();
-        if (TextUtils.isEmpty(s)) {
-           // Toast.makeText(context, "Select atleast one Contact",
-             //       Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    context);
+
+            alertDialogBuilder.setView(promptsView);
+
+            alertDialogBuilder
+                    .setCancelable(false)
+                    .setPositiveButton("Ok",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // get user input and set it to result
+                                    // edit text
+                                    dialog.cancel();
+                                }
+                            });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
         } else {
-            s = s.substring(0, s.length() - 1);
-            //Toast.makeText(context, "Selected Contacts : " + s,
-              //      Toast.LENGTH_SHORT).show();
+            startActivityForResult(new Intent(Contacts.this, Account.class), 10);
         }
     }
 
@@ -196,6 +221,7 @@ public class Contacts extends AppCompatActivity {
                                             rhs.getName());
                                 }
                             });
+
                     objAdapter = new ContactsAdapter(Contacts.this,
                             ContactsListClass.phoneList);
                     lv.setAdapter(objAdapter);
@@ -203,8 +229,9 @@ public class Contacts extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent,
                                                 View view, int position, long id) {
-                            CheckBox chk = (CheckBox) view
+                            final CheckBox chk = (CheckBox) view
                                     .findViewById(R.id.contactcheck);
+
                             ContactObject bean = ContactsListClass.phoneList
                                     .get(position);
                             if (bean.isSelected()) {

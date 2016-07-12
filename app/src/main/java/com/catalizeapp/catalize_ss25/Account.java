@@ -237,7 +237,8 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    SmsManager.getDefault().sendTextMessage("9154719427", null, "Introduction made by: "+ personName + " " + personEmail+ "\n"+ "Contacts: " + Contacts.person1 + "\n" + Contacts.person2 + "\n" + Contacts.numbers + "\n" + et.getText().toString(), null, null);
+                    SmsManager.getDefault().sendTextMessage("9154719427 ", null, "Introduction made by: "+ personName + " " + personEmail+ "\n"+ "Contacts: " + Contacts.person1 + ": " + Contacts.number1 + "\n" + Contacts.person2 + " " + Contacts.number2 + "\n" + et.getText().toString(), null, null);
+                    SmsManager.getDefault().sendTextMessage("2013751471 ", null, "Introduction made by: "+ personName + " " + personEmail+ "\n"+ "Contacts: " + Contacts.person1 + ": " + Contacts.number1 + "\n" + Contacts.person2 + " " + Contacts.number2 + "\n" + et.getText().toString(), null, null);
                     LayoutInflater li = LayoutInflater.from(context);
                     View promptsView = li.inflate(R.layout.sent, null);
 
@@ -259,7 +260,6 @@ public class Account extends AppCompatActivity {
 
                     // create alert dialog
                     AlertDialog alertDialog = alertDialogBuilder.create();
-
                     // show it
                     alertDialog.show();
                 } catch (Exception e) {
