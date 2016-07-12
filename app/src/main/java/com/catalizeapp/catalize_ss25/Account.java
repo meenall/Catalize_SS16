@@ -4,12 +4,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,14 +23,18 @@ public class Account extends AppCompatActivity {
     boolean flag = false;
     private String result;
     private String result2;
+    private SharedPreferences sharedPreferences;
+    private String personName;
+    private String personEmail;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro);
         context = this;
-
+        sharedPreferences = this.getSharedPreferences("com.catalizeapp.catalize_ss25", Context.MODE_PRIVATE);
         //final Dialog dialog = new Dialog(Account.this);
         final EditText prompt = (EditText) findViewById(R.id.prompt);
         if (Contacts.person1.contains("@") && Contacts.person2.contains("@")) {
@@ -74,9 +80,7 @@ public class Account extends AppCompatActivity {
             // show it
             alertDialog.show();
 
-        }
-
-        if (Contacts.person1.contains("@") && !Contacts.person2.contains("@") || Contacts.person2.contains("@") && !Contacts.person1.contains("@")) {
+        } else if (Contacts.person1.contains("@") && !Contacts.person2.contains("@") || Contacts.person2.contains("@") && !Contacts.person1.contains("@")) {
             LayoutInflater li = LayoutInflater.from(context);
             View promptsView = li.inflate(R.layout.layout_prompt, null);
 
@@ -118,6 +122,8 @@ public class Account extends AppCompatActivity {
             // show it
             alertDialog.show();
 
+        } else {
+            prompt.setText("Hello " + Contacts.person1 + ", meet " + Contacts.person2 + ". I am introducing you two because...");
         }
 
 
@@ -128,7 +134,7 @@ public class Account extends AppCompatActivity {
         final TextView people = (TextView) findViewById(R.id.people);
         //people.setText(Contacts.people);
 
-        Contacts.numbers = Contacts.numbers.replaceAll("[^0-9]","");
+       /* Contacts.numbers = Contacts.numbers.replaceAll("[^0-9]","");
         String temp = Contacts.numbers;
         if (temp.length()==14){ //this is for numbers of length 7 w/o area code (ex: 471-9427)
             String person1 = temp.substring(0,7);
@@ -199,7 +205,7 @@ public class Account extends AppCompatActivity {
         }
         else {
             //Toast.makeText(getApplicationContext(), "One of these numbers is invalid", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         //people.setText(temp.substring(0,10));
         //sendIntent.putExtra(et.getText().toString(), "default content");
@@ -212,11 +218,14 @@ public class Account extends AppCompatActivity {
         //sendIntent.setType("vnd.android-dir/mms-sms");
 
         Button send = (Button) findViewById(R.id.send);
+        personName= sharedPreferences.getString("name","");
+        personEmail  = sharedPreferences.getString("email", "");
         send.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 try {
-                    SmsManager.getDefault().sendTextMessage("9154719427", null, "Contacts: " + Contacts.numbers + "\n" + et.getText().toString(), null, null);
+                    SmsManager.getDefault().sendTextMessage("9154719427", null, "Introduction made by: "+ personName + " " + personEmail+ "\n"+ "Contacts: " + Contacts.person1 + "\n" + Contacts.person2 + "\n" + Contacts.numbers + "\n" + et.getText().toString(), null, null);
                     LayoutInflater li = LayoutInflater.from(context);
                     View promptsView = li.inflate(R.layout.sent, null);
 

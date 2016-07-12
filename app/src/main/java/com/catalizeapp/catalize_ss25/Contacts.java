@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -51,6 +52,7 @@ public class Contacts extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         super.onCreate(savedInstanceState);
         context = this;
         sharedPreferences = this.getSharedPreferences("com.catalizeapp.catalize_ss25", Context.MODE_PRIVATE);
@@ -90,6 +92,14 @@ public class Contacts extends AppCompatActivity {
                 }
             }
         }
+        CheckBox cb;
+
+        for(int i=0; i<lv.getChildCount();i++)
+        {
+            cb = (CheckBox)lv.getChildAt(i).findViewById(R.id.contactcheck);
+            cb.setChecked(false);
+        }
+
         String s = sb.toString().trim();
         if (TextUtils.isEmpty(s)) {
            // Toast.makeText(context, "Select atleast one Contact",
