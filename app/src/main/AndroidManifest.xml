@@ -34,9 +34,12 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".Contacts" />
-        <activity android:name=".Account" />
+
+        <activity android:name=".Account"
+            android:theme="@style/SuperCoolAppBarActivity"/>
             <meta-data android:name = "android.support.PARENT_ACTIVITY"
                 android:value= ".Contacts"/>
+
         <activity android:name=".ReportBug">
             <meta-data android:name = "android.support.PARENT_ACTIVITY"
                 android:value=".Contacts"/>

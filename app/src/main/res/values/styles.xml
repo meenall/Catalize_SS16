@@ -8,4 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SuperCoolAppBarActivity" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="actionMenuTextColor">#ffffff</item>
+        <item name = "android:textColorPrimary">#ffffff</item>
+        <item name="colorControlNormal">#ffffff</item>
+        ...
+        ...
+    </style>
 </resources>
