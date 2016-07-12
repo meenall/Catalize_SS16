@@ -15,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        android:textColor="#ffffff"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         />
 
@@ -57,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:ems="10"
+                android:textColor="#000000"
                 android:background="@android:color/transparent"
                 android:id="@+id/prompt"
                 android:textColorHint="#C1C3B8"
