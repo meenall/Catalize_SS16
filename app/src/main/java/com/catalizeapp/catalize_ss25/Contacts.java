@@ -44,7 +44,10 @@ public class Contacts extends AppCompatActivity {
     public static String person1 = "";
     public static String person2 = "";
     public static String numbers = "";
+    boolean flag = false;
     ContactsAdapter objAdapter;
+    ActionMenuItemView searchView2;
+    SearchView searchView;
     ListView lv = null;
     LinearLayout llContainer = null;
     Button btnOK = null;
@@ -64,9 +67,15 @@ public class Contacts extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                ActionMenuItemView searchView = (ActionMenuItemView) findViewById(R.id.menu_search);
-                //searchView.clearFocus();
-                //searchView.setQuery("", false);
+                if (!flag) {
+                    searchView2 = (ActionMenuItemView) findViewById(R.id.menu_search);
+                    searchView2.clearFocus();
+                    //searchView2.setQuery("", false);
+                } else {
+                    searchView = (SearchView) findViewById(R.id.menu_search);
+                    searchView.clearFocus();
+                    searchView.setQuery("", false);
+                }
                 getSelectedContacts();
                 startActivityForResult(new Intent(Contacts.this, Account.class), 10);
             }
@@ -78,9 +87,11 @@ public class Contacts extends AppCompatActivity {
         numbers = "";
         person1 = "";
         person2 = "";
+        int total = 0;
         StringBuffer sb = new StringBuffer();
         for (ContactObject bean : ContactsListClass.phoneList) {
             if (bean.isSelected()) {
+                total++;
                 bean.setSelected(false);
                 sb.append(bean.getName());
                 numbers += bean.getNumber();
@@ -267,6 +278,7 @@ public class Contacts extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 newText.toLowerCase(Locale.getDefault());
                 objAdapter.filter(newText);
+                flag = true;
                 return true;
             }
 
@@ -302,6 +314,14 @@ public class Contacts extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
     }
 
 }
