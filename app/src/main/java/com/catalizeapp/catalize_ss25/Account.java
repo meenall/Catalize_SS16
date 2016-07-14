@@ -285,8 +285,8 @@ public class Account extends AppCompatActivity {
                         ex.printStackTrace();
                     }
 
-                    //SmsManager.getDefault().sendTextMessage(Contacts.number1, null, "Meenal says: Hey " + Contacts.person2 +  "! Thanks for stopping by the Catalize booth at CreateX Product Day at Geeorgia Tech!", null, null);
-                    //SmsManager.getDefault().sendTextMessage(Contacts.number1, null, "Want to know  more about us? Check us out at catalizeapp.com." + "\n" + "Happy connecting!", null, null);
+                    //SmsManager.getDefault().sendTextMessage(Contacts.number2, null, "Meenal says: Hey " + Contacts.person2 +  "! Thanks for stopping by the Catalize booth at CreateX Product Day at Georgia Tech!", null, null);
+                    //SmsManager.getDefault().sendTextMessage(Contacts.number2, null, "Want to know  more about us? Check us out at catalizeapp.com." + "\n" + "Happy connecting!", null, null);
 
                 } catch (Exception e) {
                     AlertDialog.Builder alertDialogBuilder = new
