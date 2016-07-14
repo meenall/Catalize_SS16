@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.Manifest.permission.SEND_SMS;
 
 /**
  * A login screen that offers login via email/password.

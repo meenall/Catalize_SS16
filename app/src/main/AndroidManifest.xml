@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.catalizeapp.catalize_ss25">
+    package="com.catalizeapp.catalize_ss25" >
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission
+        android:name="com.example.gcm.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="Catalize"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".LoginActivity"
-            android:label="Catalize">
+            android:label="Catalize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,15 +43,18 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".Contacts" />
+        <activity
+            android:name=".Account"
+            android:theme="@style/SuperCoolAppBarActivity" />
 
-        <activity android:name=".Account"
-            android:theme="@style/SuperCoolAppBarActivity"/>
-            <meta-data android:name = "android.support.PARENT_ACTIVITY"
-                android:value= ".Contacts"/>
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".Contacts" />
 
-        <activity android:name=".ReportBug">
-            <meta-data android:name = "android.support.PARENT_ACTIVITY"
-                android:value=".Contacts"/>
+        <activity android:name=".ReportBug" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Contacts" />
         </activity>
     </application>
 

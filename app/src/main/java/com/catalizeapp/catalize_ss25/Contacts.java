@@ -1,5 +1,6 @@
 package com.catalizeapp.catalize_ss25;
 
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,6 +31,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -40,6 +42,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.ContentResolver;
 public class Contacts extends AppCompatActivity {
@@ -49,6 +52,8 @@ public class Contacts extends AppCompatActivity {
     public static String number1 = "";
     public static String number2 = "";
     boolean flag = false;
+    public static boolean newbie = false;
+    public static String newContact = "";
     ContactsAdapter objAdapter;
     ActionMenuItemView searchView2;
     SearchView searchView;
@@ -91,34 +96,55 @@ public class Contacts extends AppCompatActivity {
         number2 = "";
         person1 = "";
         person2 = "";
+        newbie = false;
         int total = 0;
         StringBuffer sb = new StringBuffer();
         for (ContactObject bean : ContactsListClass.phoneList) {
             if (bean.isSelected()) {
                 total++;
-                bean.setSelected(false);
-                sb.append(bean.getName());
-                if (number1 == "") {
-                    number1 = bean.getNumber();
-                } else {
-                    number2 = bean.getNumber();
-                }
-                sb.append(",");
-                if (person1 == "") {
-                    person1 = bean.getName();
-                } else {
-                    person2 = bean.getName();
-                }
             }
         }
-        CheckBox cb;
 
-        for(int i=0; i<lv.getChildCount();i++)
-        {
-            cb = (CheckBox)lv.getChildAt(i).findViewById(R.id.contactcheck);
-            cb.setChecked(false);
-        }
-        if (total != 2) {
+        if (total == 1) {
+            final Dialog dialog = new Dialog(Contacts.this);
+            //setting custom layout to dialog
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+
+            dialog.setContentView(R.layout.addnumber);
+
+            //adding text dynamically
+            final EditText newperson = (EditText) dialog.findViewById(R.id.newperson);
+            final EditText newname = (EditText) dialog.findViewById(R.id.newname);
+
+            //adding button click event
+
+            Button dismissButton = (Button) dialog.findViewById(R.id.buttonback);
+            dismissButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+
+            });
+            Button enter = (Button) dialog.findViewById(R.id.next);
+            enter.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (newname.getText().toString() == "" || newperson.getText().toString() == "") {
+                        Toast.makeText(context, "Please fill in both fields.",
+                                              Toast.LENGTH_SHORT).show();
+                    } else {
+                        person2 = newname.getText().toString();
+                        number2 = newperson.getText().toString();
+                        newbie = true;
+                        startActivityForResult(new Intent(Contacts.this, Account.class), 10);
+                        dialog.dismiss();
+                    }
+                }
+            });
+            dialog.show();
+        } else if (total != 2) {
+            newbie = false;
             LayoutInflater li = LayoutInflater.from(context);
             View promptsView = li.inflate(R.layout.two, null);
 
@@ -127,22 +153,43 @@ public class Contacts extends AppCompatActivity {
 
             alertDialogBuilder.setView(promptsView);
 
-            alertDialogBuilder
-                    .setCancelable(false)
-                    .setPositiveButton("Ok",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // get user input and set it to result
-                                    // edit text
-                                    dialog.cancel();
-                                }
-                            });
-
             // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();
             // show it
             alertDialog.show();
-        } else {
+        }
+
+        for (ContactObject bean : ContactsListClass.phoneList) {
+            if (bean.isSelected()) {
+                bean.setSelected(false);
+                sb.append(bean.getName());
+                if (number1 == "") {
+                    number1 = bean.getNumber();
+                } else {
+                    if (!newbie) {
+                        number2 = bean.getNumber();
+                    }
+                }
+                sb.append(",");
+                if (person1 == "") {
+                    person1 = bean.getName();
+                } else {
+                    if (!newbie) {
+                        person2 = bean.getName();
+                    }
+                }
+            }
+        }
+
+        CheckBox cb;
+
+        for(int i=0; i<lv.getChildCount();i++)
+        {
+            cb = (CheckBox)lv.getChildAt(i).findViewById(R.id.contactcheck);
+            cb.setChecked(false);
+        }
+
+        if (total == 2) {
             startActivityForResult(new Intent(Contacts.this, Account.class), 10);
         }
     }
@@ -330,7 +377,7 @@ public class Contacts extends AppCompatActivity {
                 Intent intentReportBug = new Intent(Contacts.this, ReportBug.class); //
                 startActivity(intentReportBug);
                 break;
-            case(R.id.menu_2):
+             case(R.id.menu_2):
                 Intent intentLogOut = new Intent(Contacts.this, LoginActivity.class);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
