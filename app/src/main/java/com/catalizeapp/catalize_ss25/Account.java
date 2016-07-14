@@ -5,7 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
+import android.app.AlertDialog;
+import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -144,6 +145,8 @@ public class Account extends AppCompatActivity {
         final Intent sendIntent = new Intent(Intent.ACTION_VIEW);
         final EditText et=(EditText)findViewById(R.id.prompt);
         final TextView people = (TextView) findViewById(R.id.people);
+        Contacts.number2 = Contacts.number2.replaceAll("[^0-9]","");
+        Contacts.number1 = Contacts.number1.replaceAll("[^0-9]","");
         //people.setText(Contacts.people);
 
        /* Contacts.numbers = Contacts.numbers.replaceAll("[^0-9]","");
@@ -237,8 +240,9 @@ public class Account extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    SmsManager.getDefault().sendTextMessage("9154719427 ", null, "Introduction made by: "+ personName + " " + personEmail+ "\n"+ "Contacts: " + Contacts.person1 + ": " + Contacts.number1 + "\n" + Contacts.person2 + " " + Contacts.number2 + "\n" + et.getText().toString(), null, null);
-                    SmsManager.getDefault().sendTextMessage("2013751471 ", null, "Introduction made by: "+ personName + " " + personEmail+ "\n"+ "Contacts: " + Contacts.person1 + ": " + Contacts.number1 + "\n" + Contacts.person2 + " " + Contacts.number2 + "\n" + et.getText().toString(), null, null);
+                    //SmsManager.getDefault().sendTextMessage("9154719427 ", null, "Introduction made by: "+ personName + " " + personEmail+ "\n"+ "Contacts: " + Contacts.person1 + ": " + Contacts.number1 + "\n" + Contacts.person2 + " " + Contacts.number2 + "\n" + et.getText().toString(), null, null);
+                    //SmsManager.getDefault().sendTextMessage("2013751471 ", null, Contacts.number1 + "\n" + Contacts.number2, null, null);
+
                     LayoutInflater li = LayoutInflater.from(context);
                     View promptsView = li.inflate(R.layout.sent, null);
 
@@ -262,6 +266,28 @@ public class Account extends AppCompatActivity {
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     // show it
                     alertDialog.show();
+
+                    //SmsManager.getDefault().sendTextMessage(Contacts.number2, null, "Hello " + Contacts.person2 + "! You've recieved an introduction from " + personName + " through Catalize, the networking and connections app:", null, null);
+                    //SmsManager.getDefault().sendTextMessage(Contacts.number2, null, et.getText().toString(), null, null);
+                    //SmsManager.getDefault().sendTextMessage(Contacts.number2, null, "Respond to this message to continue the conversation.", null, null);
+
+                    //SmsManager.getDefault().sendTextMessage(Contacts.number1, null, "Hello " + Contacts.person1 + "! You've recieved an introduction from " + personName + " through Catalize, the networking and connections app:", null, null);
+                    //SmsManager.getDefault().sendTextMessage(Contacts.number1, null, et.getText().toString(), null, null);
+                    //SmsManager.getDefault().sendTextMessage(Contacts.number1, null, "Respond to this message to continue the conversation.", null, null);
+
+
+                    try
+                    {
+                        Thread.sleep(000);//1sec
+                    }
+                    catch(InterruptedException ex)
+                    {
+                        ex.printStackTrace();
+                    }
+
+                    //SmsManager.getDefault().sendTextMessage(Contacts.number1, null, "Meenal says: Hey " + Contacts.person2 +  "! Thanks for stopping by the Catalize booth at CreateX Product Day at Geeorgia Tech!", null, null);
+                    //SmsManager.getDefault().sendTextMessage(Contacts.number1, null, "Want to know  more about us? Check us out at catalizeapp.com." + "\n" + "Happy connecting!", null, null);
+
                 } catch (Exception e) {
                     AlertDialog.Builder alertDialogBuilder = new
                             AlertDialog.Builder(Account.this);
